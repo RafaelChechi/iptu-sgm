@@ -1,0 +1,60 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: sgm
+  name: iptu-sgm-server
+  labels:
+    app: iptu-sgm
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: iptu-sgm
+  template:
+    metadata:
+      labels:
+        app: iptu-sgm
+    spec:
+      imagePullSecrets:
+      - name: pipeline-docker-registry
+      containers:
+      - name: iptu-sgm
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        ports:
+        - containerPort: 80
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: sgm
+  name: iptu-sgm-service
+spec:
+  selector:
+    app: iptu-sgm
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  namespace: sgm
+  name: iptu-sgm-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls.certresolver: default
+spec:
+  rules:
+    - host: iptu-sgm.3head.com.br
+      http:
+        paths:
+          - backend:
+              serviceName: iptu-sgm-service
+              servicePort: 80

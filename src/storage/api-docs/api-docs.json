@@ -1,0 +1,159 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Iptu",
+        "description": "API Iptu",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://iptu-sgm.3head.com.br"
+        }
+    ],
+    "paths": {
+        "/api/iptu/{cpf}": {
+            "get": {
+                "tags": [
+                    "Iptu"
+                ],
+                "operationId": "listIptuByCpf",
+                "parameters": [
+                    {
+                        "name": "cpf",
+                        "in": "path",
+                        "description": "CPF",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Iptu"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error Server",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ApiResponse": {
+                "title": "Api response",
+                "description": "Api response",
+                "properties": {
+                    "code": {
+                        "title": "Code",
+                        "description": "Code",
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 456
+                    },
+                    "message": {
+                        "title": "Message",
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Error"
+                    }
+                },
+                "type": "object"
+            },
+            "Iptu": {
+                "title": "Iptu model",
+                "description": "Iptu model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "full_name": {
+                        "title": "Full Name",
+                        "type": "string",
+                        "example": "Rafael Chechi"
+                    },
+                    "cpf": {
+                        "title": "CPF",
+                        "type": "string",
+                        "example": "01343444055"
+                    },
+                    "immobile": {
+                        "title": "Immobile",
+                        "type": "string",
+                        "example": "Casa"
+                    },
+                    "city": {
+                        "title": "City",
+                        "type": "string",
+                        "example": "Aratiba"
+                    },
+                    "address": {
+                        "title": "Address",
+                        "type": "string",
+                        "example": "Rua Coronel Pedro Pinto de Souza"
+                    },
+                    "created_at": {
+                        "title": "Created Date",
+                        "type": "string",
+                        "example": "2020-12-09T15:57:50.000000Z"
+                    },
+                    "updated_at": {
+                        "title": "Updated Date",
+                        "type": "string",
+                        "example": "2021-01-09T15:57:50.000000Z"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Iptu",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            }
+        }
+    ],
+    "security": [
+        []
+    ]
+}
